@@ -3,6 +3,24 @@
 ## Changes and goal of this fork
 Extended version of HardeningKitty, to make audits from remote clients automatically via task and sending reports to central server. This makes it easier for administrators to quickly obtain the current security status of all clients, without the need of installing an agent.
 
+## Usage
+Extract the files in C:\HardeningKitty
+Create a new task with these settings:
+Choose user with local admin rights or use system, run whether user is logged on or not.
+Actions - start a program
+Script: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Arguments: -executionpolicy bypass "C:\HardeningKitty\HardeningKitty-Task.ps1"
+
+These files can be distributed on the clients and creating the tasks. Note that user in whose context the script runs must adjust the execution-policy and grant write permissions on the file server.
+
+After running, you got the report and one file with scores-*.csv
+Both in csv format. The assessment result, which is our score, is stored in the second file, as this is not saved in the report.
+This extended version only copies the score and report (and mail, if used) as soon as it falls below a defined threshold.
+You can adjust threshold on your needs.
+
+I´m new using GitHub and this is my first repo. The code can of course be optimized and will also be extended, feedback is welcome.
+It was important to me to present my idea to the community and to continue working on the script, which gives me great pleasure.
+
 ## Introduction
 
 The project started as a simple hardening list for Windows 10. After some time, HardeningKitty was created to simplify the hardening of Windows. Now, HardeningKitty supports guidelines from Microsoft, CIS Benchmarks, DoD STIG and BSI SiSyPHuS Win10. And of course my own hardening list.
