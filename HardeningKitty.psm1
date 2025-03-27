@@ -3284,6 +3284,28 @@
         }
         Write-Output "`n"
         Write-ProtocolEntry -Text "Your HardeningKitty score is: $HardeningKittyScoreRounded. HardeningKitty Statistics: Total checks: $StatsTotal - Passed: $StatsPassed, Low: $StatsLow, Medium: $StatsMedium, High: $StatsHigh." -LogLevel "Info"
+        $FilePath="C:\HardeningKitty"
+		$Threshold=5
+        If ($HardeningKittyScoreRounded -lt $Threshold) {
+			$Summary = [PSCustomObject]@{
+				Hostname			= $Hostname
+				HardeningKittyScore	= $HardeningKittyScoreRounded
+				FileDate			= $FileDate
+				Threshold			= $Threshold
+			}
+			$Summary | Export-Csv -Path "$FilePath\scores-$Hostname.csv" -Delimiter "," -NoTypeInformation -Append
+			$WarningText="HardeningKitty Score below $Threshold on client: $Hostname ($HardeningKittyScoreRounded)"
+			$WarningText | Out-File -FilePath "$FilePath\warning.txt" -Append
+			# Sending Mail-Notification, update parameters and uncomment it, if you want sending mails
+			$password = ConvertTo-SecureString 'xxx' -AsPlainText -Force
+			$credential = New-Object System.Management.Automation.PSCredential ("yourMail", $password)
+			#Send-MailMessage -From yourMail -Subject "Security Audit" -To yourAdminMail -Body "$WarningText" -Credential $credential -Port 587 -SmtpServer xxx -UseSsl
+			
+			# Copy files to fileserver
+			$Fileserverpath= '\\Fileserver\HardeningKitty'
+			New-SmbMapping -RemotePath "$Fileserverpath" -Username "xxx" -Password "xxx"
+			xcopy "$FilePath\*.csv" $Fileserverpath /Y
+		}
     }
     Write-ProtocolEntry -Text "HardeningKitty is done" -LogLevel "Info"
 }
