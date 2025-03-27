@@ -1,5 +1,8 @@
 # HardeningKitty and Windows Hardening
 
+## Changes and goal of this fork
+Extended version of HardeningKitty, to make audits from remote clients automatically via task and sending reports to central server. This makes it easier for administrators to quickly obtain the current security status of all clients, without the need of installing an agent.
+
 ## Introduction
 
 The project started as a simple hardening list for Windows 10. After some time, HardeningKitty was created to simplify the hardening of Windows. Now, HardeningKitty supports guidelines from Microsoft, CIS Benchmarks, DoD STIG and BSI SiSyPHuS Win10. And of course my own hardening list.
