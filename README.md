@@ -5,10 +5,13 @@ Extended version of HardeningKitty, to make audits from remote clients automatic
 
 ## Usage
 Extract the files in C:\HardeningKitty
+
 Create a new task with these settings:
 Choose user with local admin rights or use system, run whether user is logged on or not.
+
 Actions - start a program
 Script: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
 Arguments: -executionpolicy bypass "C:\HardeningKitty\HardeningKitty-Task.ps1"
 
 These files can be distributed on the clients and creating the tasks. Note that user in whose context the script runs must adjust the execution-policy and grant write permissions on the file server.
